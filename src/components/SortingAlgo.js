@@ -1,17 +1,17 @@
 export const mergeSort = array => {
-	const SudoArray = array.slice()
+	const PsudoArray = array.slice()
 	const Positions = []
-	merge(array, 0, array.length - 1, SudoArray, Positions)
+	merge(array, 0, array.length - 1, PsudoArray, Positions)
 	return Positions
 }
-const merge = (array, left, right, SudoArray, Positions) => {
+const merge = (array, left, right, PsudoArray, Positions) => {
 	if (left === right) return
 	const mid = Math.floor((left + right) / 2)
-	merge(SudoArray, left, mid, array, Positions)
-	merge(SudoArray, mid + 1, right, array, Positions)
-	arrenge(array, left, mid, right, SudoArray, Positions)
+	merge(PsudoArray, left, mid, array, Positions)
+	merge(PsudoArray, mid + 1, right, array, Positions)
+	arrenge(array, left, mid, right, PsudoArray, Positions)
 }
-const arrenge = (array, left, mid, right, SudoArray, Positions) => {
+const arrenge = (array, left, mid, right, PsudoArray, Positions) => {
 	let i = left,
 		k = left,
 		j = mid + 1
@@ -19,12 +19,12 @@ const arrenge = (array, left, mid, right, SudoArray, Positions) => {
 		const position = {}
 		position.comp = [i, j]
 
-		if (SudoArray[i] < SudoArray[j]) {
-			position.swap = [k, i, SudoArray[i]]
-			array[k++] = SudoArray[i++]
+		if (PsudoArray[i] < PsudoArray[j]) {
+			position.swap = [k, i, PsudoArray[i]]
+			array[k++] = PsudoArray[i++]
 		} else {
-			position.swap = [k, j, SudoArray[j]]
-			array[k++] = SudoArray[j++]
+			position.swap = [k, j, PsudoArray[j]]
+			array[k++] = PsudoArray[j++]
 		}
 
 		Positions.push(position)
@@ -33,16 +33,16 @@ const arrenge = (array, left, mid, right, SudoArray, Positions) => {
 	while (i <= mid) {
 		Positions.push({
 			comp: [i, i],
-			swap: [k, i, SudoArray[i]],
+			swap: [k, i, PsudoArray[i]],
 		})
-		array[k++] = SudoArray[i++]
+		array[k++] = PsudoArray[i++]
 	}
 
 	while (j <= right) {
 		Positions.push({
 			comp: [j, j],
-			swap: [k, j, SudoArray[j]],
+			swap: [k, j, PsudoArray[j]],
 		})
-		array[k++] = SudoArray[j++]
+		array[k++] = PsudoArray[j++]
 	}
 }

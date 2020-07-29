@@ -1,23 +1,86 @@
 import React, { useState, useEffect } from "react"
 import { mergeSort as merge } from "./SortingAlgo"
-
+import { bubbleSort as bubble } from "./BubbleSort"
+import { selectionSort as selection } from "./SelectionSort"
+import { quickSort as quick } from "./QuickSort"
 const BarsContext = () => {
+	//states for diffrent fields
+
 	const [state, setstate] = useState([])
+	const [position, setPosition] = useState()
+	const [speed, setSpeed] = useState(5)
+	const [arraySize, setArraySize] = useState(100)
+	const [sort, setSort] = useState("")
+	const size = window.innerHeight
 
 	useEffect(() => {
 		stateArray()
-	}, [])
+		// console.log(sort)
+		selectSort()
+	}, [arraySize, sort])
+
+	const selectSort = () => {
+		switch (sort) {
+			case "mergeSort":
+				console.log("ran")
+				setPosition(merge(state))
+				break
+			case "QuickSort":
+				setPosition(quick(state))
+				break
+			case "SelectionSort":
+				setPosition(selection(state))
+				break
+			case "bubbleSort":
+				setPosition(bubble(state))
+				break
+			default:
+				break
+		}
+	}
 
 	const stateArray = () => {
 		const array = []
-		for (let i = 0; i < 200; i++) {
-			array.push(Math.floor(Math.random() * (600 - 10) + 10))
+		//create an array of height size of window
+		let i = (size - 100) / arraySize
+		let l = 0
+		let k = i
+		while (l < arraySize) {
+			array[l] = Math.floor(i)
+			i += k
+			l++
 		}
+
+		//suffling the array elements
+		for (let n = 0; n < arraySize; n++) {
+			let j = Math.floor(Math.random() * (n + 1))
+			;[array[n], array[j]] = [array[j], array[n]]
+		}
+
 		setstate(array)
 	}
 
+	//Sorting and animation occures here
+	// switch (sort) {
+	// 	case "mergeSort":
+	// 		console.log("ran")
+	// 		setPosition(merge(state))
+	// 		break
+	// 	case "QuickSort":
+	// 		setPosition(quick(state))
+	// 		break
+	// 	case "SelectionSort":
+	// 		setPosition(selection(state))
+	// 		break
+	// 	case "bubbleSort":
+	// 		setPosition(bubble(state))
+	// 		break
+
+	// 	default:
+	// 		break
+	// }
 	const checkSort = () => {
-		let position = merge(state)
+		console.log(position)
 		let animation = []
 		for (let i = 0; i < position.length; i++) {
 			animation.push(position[i].comp)
@@ -26,7 +89,7 @@ const BarsContext = () => {
 
 		for (let i = 0; i < animation.length; i++) {
 			const bar = document.getElementsByClassName("single-bar")
-			const color = i % 2 === 0 ? `blue` : `black`
+			const color = i % 2 === 0 ? `yellow` : `black`
 
 			if (i % 2 !== 0) {
 				setTimeout(() => {
@@ -36,7 +99,7 @@ const BarsContext = () => {
 					abar.backgroundColor = color
 					bbar.backgroundColor = color
 					abar.height = `${b}px`
-				}, i * 5)
+				}, i * speed)
 			} else {
 				const [a, b] = animation[i]
 				const abar = bar[a].style
@@ -45,18 +108,45 @@ const BarsContext = () => {
 				setTimeout(() => {
 					abar.backgroundColor = color
 					bbar.backgroundColor = color
-				}, i * 5)
+				}, i * speed)
 			}
 		}
 	}
 
-	// const { value } = state
 	return (
 		<div className="screen-container">
 			<div className="button-bar">
+				<select
+					placeholder="select"
+					onChange={e => setSort(e.target.value)}
+				>
+					<option>mergeSort</option>
+					<option>QuickSort</option>
+					<option>SelectionSort</option>
+					<option>bubbleSort</option>
+				</select>
+				<input
+					placeholder="time in miliseconds"
+					value={speed}
+					onChange={e => {
+						setSpeed(e.target.value)
+					}}
+					required
+				></input>
+				<input
+					placeholder="size"
+					value={arraySize}
+					onChange={e => {
+						setArraySize(e.target.value)
+					}}
+					required
+				></input>
 				<button onClick={stateArray}>Shuffle</button>
-				<button onClick={checkSort}>check</button>
+				<button className="start-button" onClick={checkSort}>
+					Start
+				</button>
 			</div>
+
 			<div className="bar-container">
 				{state.map((arr, i) => {
 					return (
