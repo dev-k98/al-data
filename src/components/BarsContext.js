@@ -21,17 +21,17 @@ const BarsContext = () => {
 
 	const selectSort = () => {
 		switch (sort) {
-			case "mergeSort":
+			case "Merge Sort":
 				console.log("ran")
 				setPosition(merge(state))
 				break
-			case "QuickSort":
+			case "Quick sort":
 				setPosition(quick(state))
 				break
-			case "SelectionSort":
+			case "Selection Sort":
 				setPosition(selection(state))
 				break
-			case "bubbleSort":
+			case "Bubble Sort":
 				setPosition(bubble(state))
 				break
 			default:
@@ -60,25 +60,7 @@ const BarsContext = () => {
 		setstate(array)
 	}
 
-	//Sorting and animation occures here
-	// switch (sort) {
-	// 	case "mergeSort":
-	// 		console.log("ran")
-	// 		setPosition(merge(state))
-	// 		break
-	// 	case "QuickSort":
-	// 		setPosition(quick(state))
-	// 		break
-	// 	case "SelectionSort":
-	// 		setPosition(selection(state))
-	// 		break
-	// 	case "bubbleSort":
-	// 		setPosition(bubble(state))
-	// 		break
-
-	// 	default:
-	// 		break
-	// }
+	//animating the bars with specific timeout
 	const checkSort = () => {
 		console.log(position)
 		let animation = []
@@ -120,10 +102,10 @@ const BarsContext = () => {
 					placeholder="select"
 					onChange={e => setSort(e.target.value)}
 				>
-					<option>mergeSort</option>
-					<option>QuickSort</option>
-					<option>SelectionSort</option>
-					<option>bubbleSort</option>
+					<option>Merge Sort</option>
+					<option>Quick sort</option>
+					<option>Selection Sort</option>
+					<option>Bubble Sort</option>
 				</select>
 				<input
 					placeholder="time in miliseconds"
